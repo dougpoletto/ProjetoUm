@@ -31,13 +31,14 @@ namespace ProjetoUm
         private static void VerificaTabelaCriacao(DbContext dbContext, string tabela, string script)
         {
             var esquemaPadrao = dbContext.Model.GetDefaultSchema();
-            var esquemaTabela = string.IsNullOrEmpty(esquemaPadrao)
+            var esquemaTabela = string.IsNullOrWhiteSpace(esquemaPadrao)
                 ? $"[{tabela}]"
                 : $"[{esquemaPadrao}].[{tabela}]";
             var inicioScript = $"create table {esquemaTabela}";
-            var scriptCriacao = script.Split(inicioScript).Last();
-            var scriptExiste = $@"if not exists (select * from sysobjects where name = '{tabela}' " + 
-                $"{scriptCriacao.First()}";
+            const string final = "\r\nGO\r\n";
+            var scriptCriacao = script.Split(inicioScript).Last().Split(final);
+            var scriptExiste = $@"if not exists (select * from sysobjects where name = '{tabela}') " + 
+                $"{scriptCriacao.First()}".Replace(final,"");
 
             dbContext.Database.ExecuteSqlRaw(scriptExiste);
         }

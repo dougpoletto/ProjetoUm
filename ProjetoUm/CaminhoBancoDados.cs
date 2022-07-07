@@ -30,10 +30,11 @@ namespace ProjetoUm
                 var conexao = CarregaConexaoBancoDados();
                 if (conexao != null)
                 {
-                    CaminhoBanco = $@"Data Source={conexao}";
+                    CaminhoBanco = $@"Data Source={conexao.DataSource};User ID={conexao.UserId};
+                        Password={conexao.Password};Initial Catalog={conexao.InitialCatalog}";
                 }
             }
-            return Conexao;
+            return CaminhoBanco;
         }
 
         private static DadosAcessoBancoDados CarregaConexaoBancoDados()
