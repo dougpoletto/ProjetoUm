@@ -26,5 +26,6 @@ namespace ProjetoUm
         }
 
         public DbSet<CadastroPessoas> CadastroPessoas { get; set; }
+        public DbSet<CadastroEstado> CadastroEstado { get; set; }
     }
 }

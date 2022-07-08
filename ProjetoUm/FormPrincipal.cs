@@ -22,6 +22,7 @@ namespace ProjetoUm
                         .ToList();
                     dataGridViewPessoas.AutoGenerateColumns = false;
                     dataGridViewPessoas.AutoSize = false;
+                    dataGridViewPessoas.Columns.Clear();
                     dataGridViewPessoas.DataSource = pessoas;
 
                     FormatarColunaDataGrid("Id", "Id", 60, "Código", DataGridViewContentAlignment.MiddleCenter);
@@ -81,15 +82,17 @@ namespace ProjetoUm
                     int id = int.Parse(dataGridViewPessoas.CurrentRow.Cells["Id"].Value.ToString());
                     if (id != 0)
                     {
-                        MessageBox.Show("Não existe registro para excluir!",
+                        DialogResult dialogResult =  MessageBox.Show("Confirma exclusão do registro selecionado!",
                             "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        var pessoas = banco.CadastroPessoas
-                            .Where(x => x.Id == id)
-                            .FirstOrDefault();
-                        banco.CadastroPessoas
-                            .Remove(pessoas);
-                        banco.SaveChanges();
-
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            var pessoas = banco.CadastroPessoas
+                                .Where(x => x.Id == id)
+                                .FirstOrDefault();
+                            banco.CadastroPessoas
+                                .Remove(pessoas);
+                            banco.SaveChanges();
+                        }
                         CarregaGridCadastroPessoas();
                     }
                 }

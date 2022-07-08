@@ -13,7 +13,7 @@ namespace ProjetoUm
         [JsonProperty("complemento")]
         public string Complemento { get; set; }
         [JsonProperty("bairro")]
-        public string Bairro { get; set; }
+        public string Bairro { get; set;  }
         [JsonProperty("localidade")]
         public string Localidade { get; set; }
         [JsonProperty("uf")]
@@ -32,7 +32,7 @@ namespace ProjetoUm
             try
             {
                 var conulstaCep = new ConsultarCep();
-                var client = new RestClient($"https://viacep.com.br/ws/{cep.Replace("-", "")}/json/");
+                var client = new RestClient($"https://viacep.com.br/ws/{cep.Replace("-", "")}/json/"); //https://viacep.com.br/
                 var request = new RestRequest();
 
                 request.Method = Method.Get;

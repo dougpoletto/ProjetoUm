@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,21 @@ namespace ProjetoUm
         public FormCadastroPessoa()
         {
             InitializeComponent();
+            CarregaComboBox();
+        }
+
+        private void CarregaComboBox()
+        {
+            comboBoxEstado.Items.Clear();
+            using (var banco = new ContextoBancoDados())
+            {
+                var estados = banco.CadastroEstado
+                    .ToList();
+                foreach (var estado in estados)
+                {
+                    comboBoxEstado.Items.Add(estado.Estado.ToString());
+                }
+            }
         }
 
         private void buttonGravar_Click(object sender, EventArgs e)
@@ -29,13 +45,13 @@ namespace ProjetoUm
                     pessoas.Add(new CadastroPessoas() {
                         Nome = textBoxNome.Text,
                         CpfCnpj = maskedTextBoxCpfCnpj.Text.Trim(new Char[] { '.', '-', ' ' }),
-                        RgIe = "",
+                        RgIe = textBoxRgIe.Text.Trim(),
                         Endereco = textBoxEndereco.Text.Trim(),
-                        Numero = 0,
+                        Numero = int.Parse(textBoxNumero.Text),
                         Complemento = textBoxComplemento.Text.Trim(),
                         Bairro = textBoxBairro.Text.Trim(),
                         Cidade = textBoxCidade.Text.Trim(),
-                        Estado = textBoxEstado.Text.Trim(),
+                        Estado = comboBoxEstado.Text.Trim(),
                         Cep = maskedTextBoxCep.Text.Trim(new Char[] { '.', '-', ' ' }),
                     });
                     pessoas.SaveChanges();
@@ -52,18 +68,17 @@ namespace ProjetoUm
 
         private void maskedTextBoxCpfCnpj_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
+            if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) ||
+                (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
             {
-                if (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9)
+                if (e.KeyCode != Keys.Back)
                 {
-                    if (e.KeyCode != Keys.Back)
-                    {
-                        TeclaNumerica += 1;
-                    }
-                    else
-                    {
-                        TeclaNumerica = 0;
-                    }
+                    TeclaNumerica += 1;
+                }
+                else
+                {
+                    maskedTextBoxCpfCnpj.ResetText();
+                    TeclaNumerica = 0;
                 }
             }
         }
@@ -91,7 +106,7 @@ namespace ProjetoUm
 
         private async void buttonPesquisaCep_Click(object sender, EventArgs e)
         {
-            if (maskedTextBoxCep.Text != null)
+            if (maskedTextBoxCep.Text != null && maskedTextBoxCep.Text != "")
             {
                 var dadosCep = await ConsultarCep.ConsultaCep(maskedTextBoxCep.Text);
                 if (dadosCep != null)
@@ -100,8 +115,21 @@ namespace ProjetoUm
                     textBoxComplemento.Text = dadosCep.Complemento.Trim();
                     textBoxBairro.Text = dadosCep.Bairro.Trim();
                     textBoxCidade.Text = dadosCep.Localidade.Trim();
-                    textBoxEstado.Text = dadosCep.Uf.Trim();
+                    comboBoxEstado.Text = dadosCep.Uf.Trim();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Informe o Cep para pesquisa!",
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void textBoxNumero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }
