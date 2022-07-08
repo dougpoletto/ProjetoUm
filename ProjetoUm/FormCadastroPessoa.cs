@@ -28,15 +28,15 @@ namespace ProjetoUm
                 {
                     pessoas.Add(new CadastroPessoas() {
                         Nome = textBoxNome.Text,
-                        CpfCnpj = maskedTextBoxCpfCnpj.Text,
+                        CpfCnpj = maskedTextBoxCpfCnpj.Text.Trim(new Char[] { '.', '-', ' ' }),
                         RgIe = "",
-                        Endereco = "",
+                        Endereco = textBoxEndereco.Text.Trim(),
                         Numero = 0,
-                        Complemento = "",
-                        Bairro = "",
-                        Cidade = "",
-                        Estado = "",
-                        Cep = ""
+                        Complemento = textBoxComplemento.Text.Trim(),
+                        Bairro = textBoxBairro.Text.Trim(),
+                        Cidade = textBoxCidade.Text.Trim(),
+                        Estado = textBoxEstado.Text.Trim(),
+                        Cep = maskedTextBoxCep.Text.Trim(new Char[] { '.', '-', ' ' }),
                     });
                     pessoas.SaveChanges();
                 }
@@ -46,14 +46,15 @@ namespace ProjetoUm
                         "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            Dispose();
             Close();
         }
 
         private void maskedTextBoxCpfCnpj_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode >= Keys.D0 || e.KeyCode <= Keys.D9)
+            if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
             {
-                if (e.KeyCode >= Keys.NumPad0 || e.KeyCode <= Keys.NumPad9)
+                if (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9)
                 {
                     if (e.KeyCode != Keys.Back)
                     {
@@ -84,7 +85,24 @@ namespace ProjetoUm
 
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
+            Dispose();
             Close();
+        }
+
+        private async void buttonPesquisaCep_Click(object sender, EventArgs e)
+        {
+            if (maskedTextBoxCep.Text != null)
+            {
+                var dadosCep = await ConsultarCep.ConsultaCep(maskedTextBoxCep.Text);
+                if (dadosCep != null)
+                {
+                    textBoxEndereco.Text = dadosCep.Logradouro.Trim();
+                    textBoxComplemento.Text = dadosCep.Complemento.Trim();
+                    textBoxBairro.Text = dadosCep.Bairro.Trim();
+                    textBoxCidade.Text = dadosCep.Localidade.Trim();
+                    textBoxEstado.Text = dadosCep.Uf.Trim();
+                }
+            }
         }
     }
 }
