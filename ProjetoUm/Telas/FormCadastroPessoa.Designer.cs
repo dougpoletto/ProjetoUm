@@ -51,6 +51,7 @@
             this.labelCidade = new System.Windows.Forms.Label();
             this.labelEstado = new System.Windows.Forms.Label();
             this.comboBoxEstado = new System.Windows.Forms.ComboBox();
+            this.comboBoxPessoa = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // textBoxNome
@@ -248,11 +249,20 @@
             this.comboBoxEstado.Size = new System.Drawing.Size(60, 23);
             this.comboBoxEstado.TabIndex = 19;
             // 
+            // comboBoxPessoa
+            // 
+            this.comboBoxPessoa.FormattingEnabled = true;
+            this.comboBoxPessoa.Location = new System.Drawing.Point(244, 117);
+            this.comboBoxPessoa.Name = "comboBoxPessoa";
+            this.comboBoxPessoa.Size = new System.Drawing.Size(121, 23);
+            this.comboBoxPessoa.TabIndex = 23;
+            // 
             // FormCadastroPessoa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(393, 361);
+            this.Controls.Add(this.comboBoxPessoa);
             this.Controls.Add(this.comboBoxEstado);
             this.Controls.Add(this.labelEstado);
             this.Controls.Add(this.labelCidade);
@@ -278,6 +288,7 @@
             this.Controls.Add(this.textBoxNome);
             this.Name = "FormCadastroPessoa";
             this.Text = "Cadastro";
+            this.Load += new System.EventHandler(this.FormCadastroPessoa_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,5 +319,6 @@
         private Label labelCidade;
         private Label labelEstado;
         private ComboBox comboBoxEstado;
+        private ComboBox comboBoxPessoa;
     }
 }

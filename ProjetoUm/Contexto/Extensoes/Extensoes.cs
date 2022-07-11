@@ -14,11 +14,13 @@ namespace ProjetoUm
                 .Select(p => p.Name)
                 .ToArray();
             var script = dbContext.Database.GenerateCreateScript();
+            int indice = 0;
             try
             {
                 foreach (var tabela in propriedade)
                 {
-                    VerificaTabelaCriacao(dbContext, tabela, script);
+                    VerificaTabelaCriacao(dbContext, tabela, script, indice);
+                    indice++;
                 }
             }
             catch (Exception ex)
@@ -28,7 +30,7 @@ namespace ProjetoUm
             }
         }
 
-        private static void VerificaTabelaCriacao(DbContext dbContext, string tabela, string script)
+        private static void VerificaTabelaCriacao(DbContext dbContext, string tabela, string script, int indice)
         {
             var esquemaPadrao = dbContext.Model.GetDefaultSchema();
             var esquemaTabela = string.IsNullOrWhiteSpace(esquemaPadrao)
@@ -37,9 +39,8 @@ namespace ProjetoUm
             var inicioScript = $"create table {esquemaTabela}";
             const string final = "\r\nGO\r\n";
             var scriptCriacao = script.Split(inicioScript).Last().Split(final);
-            var scriptExiste = $@"if not exists (select * from sysobjects where name = '{tabela}') " + 
-                $"{scriptCriacao.First()}".Replace(final,"");
-
+            var scriptExiste = $@"if not exists (select * from sysobjects where name = '{tabela}') " +
+                $"{scriptCriacao[indice].Replace("IDENTITY", "")}".Replace(final, "");
             dbContext.Database.ExecuteSqlRaw(scriptExiste);
         }
     }

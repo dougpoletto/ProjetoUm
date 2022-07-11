@@ -3,9 +3,9 @@ using System;
 
 namespace ProjetoUm
 {
-    public partial class FormPrincipal : Form
+    public partial class FormPrincipalCadastroPessoas : Form
     {
-        public FormPrincipal()
+        public FormPrincipalCadastroPessoas()
         {
             InitializeComponent();
             CarregaGridCadastroPessoas();
@@ -62,7 +62,7 @@ namespace ProjetoUm
         {
             try
             {
-                var gravar = new FormCadastroPessoa();
+                var gravar = new FormCadastroPessoa("Adicionar", 0);
                 gravar.ShowDialog();
                 CarregaGridCadastroPessoas();
             }
@@ -111,7 +111,27 @@ namespace ProjetoUm
 
         private void buttonAlterar_Click(object sender, EventArgs e)
         {
-
+            using (var banco = new ContextoBancoDados())
+            {
+                try
+                {
+                    int id = int.Parse(dataGridViewPessoas.CurrentRow.Cells["Id"].Value.ToString());
+                    if (id != 0)
+                    {
+                        var pessoa = banco.CadastroPessoas
+                            .Where(x => x.Id == id)
+                            .FirstOrDefault();
+                        var form = new FormCadastroPessoa("Modificar", id);
+                        form.ShowDialog();
+                        CarregaGridCadastroPessoas();
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    MessageBox.Show($"Falha ao alterar o registro. Erro: {ex.Message}!",
+                        "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
     }
 }

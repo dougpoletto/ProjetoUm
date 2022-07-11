@@ -7,6 +7,7 @@ namespace ProjetoUm
         [Key]
         public int Id { get; set; }
         public string Nome { get; set; }
+        public string TipoPessoa { get; set; }
         public string CpfCnpj { get; set; }
         public string RgIe { get; set; }
         public string Endereco { get; set; }

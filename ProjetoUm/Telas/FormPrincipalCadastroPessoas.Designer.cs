@@ -1,6 +1,6 @@
 ﻿namespace ProjetoUm
 {
-    partial class FormPrincipal
+    partial class FormPrincipalCadastroPessoas
     {
         /// <summary>
         ///  Required designer variable.
@@ -57,7 +57,7 @@
             // 
             // buttonAdicionar
             // 
-            this.buttonAdicionar.Location = new System.Drawing.Point(657, 320);
+            this.buttonAdicionar.Location = new System.Drawing.Point(657, 321);
             this.buttonAdicionar.Name = "buttonAdicionar";
             this.buttonAdicionar.Size = new System.Drawing.Size(75, 23);
             this.buttonAdicionar.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             // buttonRemover
             // 
-            this.buttonRemover.Location = new System.Drawing.Point(819, 320);
+            this.buttonRemover.Location = new System.Drawing.Point(819, 321);
             this.buttonRemover.Name = "buttonRemover";
             this.buttonRemover.Size = new System.Drawing.Size(75, 23);
             this.buttonRemover.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // buttonAlterar
             // 
-            this.buttonAlterar.Location = new System.Drawing.Point(738, 320);
+            this.buttonAlterar.Location = new System.Drawing.Point(738, 321);
             this.buttonAlterar.Name = "buttonAlterar";
             this.buttonAlterar.Size = new System.Drawing.Size(75, 23);
             this.buttonAlterar.TabIndex = 4;
@@ -89,7 +89,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 355);
+            this.ClientSize = new System.Drawing.Size(906, 353);
             this.Controls.Add(this.buttonAlterar);
             this.Controls.Add(this.buttonRemover);
             this.Controls.Add(this.buttonAdicionar);
