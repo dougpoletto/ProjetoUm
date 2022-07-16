@@ -1,4 +1,4 @@
-using System;
+using ProjetoUm.Telas;
 
 namespace ProjetoUm
 {
@@ -8,7 +8,7 @@ namespace ProjetoUm
         public static void Main(string[] args)
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormPrincipalCadastroPessoas());
+            Application.Run(new FormPrincipal());
         }
     }
 }

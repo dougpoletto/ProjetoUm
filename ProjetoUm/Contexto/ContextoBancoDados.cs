@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjetoUm.Contexto.Extensoes;
+using ProjetoUm.Entidades;
 
-namespace ProjetoUm
+namespace ProjetoUm.Contexto
 {
     public class ContextoBancoDados : DbContext
     {
@@ -27,5 +29,6 @@ namespace ProjetoUm
 
         public DbSet<CadastroEstado> CadastroEstado { get; set; }
         public DbSet<CadastroPessoas> CadastroPessoas { get; set; }
+        public DbSet<CadastroPessoasTelefones> CadastroPessoasTelefones { get; set; }
     }
 }

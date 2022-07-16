@@ -2,7 +2,7 @@
 using RestSharp;
 using System.Net;
 
-namespace ProjetoUm
+namespace ProjetoUm.Classes
 {
     public class ConsultarCep
     {

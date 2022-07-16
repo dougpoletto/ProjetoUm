@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Windows.Forms;
+using ProjetoUm.Contexto.Conexao;
 
-namespace ProjetoUm
+namespace ProjetoUm.Contexto
 {
     public class CaminhoBancoDados
     {

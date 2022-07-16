@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Windows.Forms;
 
-namespace ProjetoUm
+namespace ProjetoUm.Contexto.Extensoes
 {
     public static class Extensoes
     {

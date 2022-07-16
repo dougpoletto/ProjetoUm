@@ -1,6 +1,6 @@
-﻿namespace ProjetoUm
+﻿namespace ProjetoUm.Telas
 {
-    partial class FormPrincipalCadastroPessoas
+    partial class FormlCadastroPessoasLista
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormlCadastroPessoasLista));
             this.dataGridViewPessoas = new ProjetoUm.DataGridViewSistema();
             this.buttonAdicionar = new System.Windows.Forms.Button();
             this.buttonRemover = new System.Windows.Forms.Button();
@@ -85,7 +86,7 @@
             this.buttonAlterar.UseVisualStyleBackColor = true;
             this.buttonAlterar.Click += new System.EventHandler(this.buttonAlterar_Click);
             // 
-            // FormPrincipal
+            // FormlCadastroPessoasLista
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -94,8 +95,9 @@
             this.Controls.Add(this.buttonRemover);
             this.Controls.Add(this.buttonAdicionar);
             this.Controls.Add(this.dataGridViewPessoas);
-            this.Name = "FormPrincipal";
-            this.Text = "Projeto";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FormlCadastroPessoasLista";
+            this.Text = "Pessoas";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPessoas)).EndInit();
             this.ResumeLayout(false);
 

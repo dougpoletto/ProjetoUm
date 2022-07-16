@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProjetoUm
+namespace ProjetoUm.Entidades
 {
     public class CadastroPessoas
     {
@@ -17,6 +17,6 @@ namespace ProjetoUm
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public string Cep { get; set; }
-        //public List<CadastroPessoasTelefones> CadastroPessoasTelefones { get; set; } = new List<CadastroPessoasTelefones>();
+        public List<CadastroPessoasTelefones> CadastroPessoasTelefones { get; set; } = new List<CadastroPessoasTelefones>();
     }
 }

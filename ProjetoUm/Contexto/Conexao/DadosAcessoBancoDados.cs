@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ProjetoUm
+namespace ProjetoUm.Contexto.Conexao
 {
     public class DadosAcessoBancoDados
     {

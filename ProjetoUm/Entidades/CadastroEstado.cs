@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProjetoUm
+namespace ProjetoUm.Entidades
 {
     public class CadastroEstado
     {

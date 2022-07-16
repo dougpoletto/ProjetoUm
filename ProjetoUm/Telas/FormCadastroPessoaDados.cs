@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjetoUm.Classes;
+using ProjetoUm.Contexto;
+using ProjetoUm.Entidades;
 using System.Collections;
 
-namespace ProjetoUm
+namespace ProjetoUm.Telas
 {
-    public partial class FormCadastroPessoa : Form
+    public partial class FormCadastroPessoaDados : Form
     {
-        private string TextoAuxiliar = "";
         private string Operacao = "";
         private int IdPessoa = 0;
-        private int TeclaNumerica = 0;
-        public FormCadastroPessoa(string operacao, int id)
+        public FormCadastroPessoaDados(string operacao, int id)
         {
             InitializeComponent();
             CarregaComboBoxEstado();
@@ -42,6 +43,11 @@ namespace ProjetoUm
 
         private void buttonGravar_Click(object sender, EventArgs e)
         {
+            if (maskedTextBoxCpfCnpj.Text == "")
+            {
+                comboBoxPessoa.Focus();
+            }
+
             using (var banco = new ContextoBancoDados(false))
             {
                 try
@@ -99,39 +105,6 @@ namespace ProjetoUm
             Close();
         }
 
-        private void maskedTextBoxCpfCnpj_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9) ||
-                (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
-            {
-                if (e.KeyCode != Keys.Back)
-                {
-                    TeclaNumerica += 1;
-                }
-                else
-                {
-                    TextoAuxiliar = "";
-                    maskedTextBoxCpfCnpj.ResetText();
-                    TeclaNumerica = 0;
-                }
-            }
-        }
-
-        private void maskedTextBoxCpfCnpj_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (TeclaNumerica > 11)
-            {
-                TextoAuxiliar = maskedTextBoxCpfCnpj.Text;
-                maskedTextBoxCpfCnpj.Mask = @"00\.000\.000\/0000\-00";
-                maskedTextBoxCpfCnpj.ResetText();
-                maskedTextBoxCpfCnpj.Text = TextoAuxiliar;
-            }
-            else
-            {
-                maskedTextBoxCpfCnpj.Mask = @"000\.000\.000\-00";
-            }
-        }
-
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
             Dispose();
@@ -159,14 +132,6 @@ namespace ProjetoUm
             }
         }
 
-        private void textBoxNumero_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
         private void FormCadastroPessoa_Load(object sender, EventArgs e)
         {
             if (Operacao == "Modificar")
@@ -188,7 +153,29 @@ namespace ProjetoUm
                     textBoxCidade.Text = pessoa.Cidade.Trim();
                     comboBoxEstado.Text = pessoa.Estado.Trim();
                 }
+                maskedTextBoxCpfCnpj.Enabled = true;
             }
+            else
+            {
+                maskedTextBoxCpfCnpj.Enabled = false;
+                comboBoxPessoa.Text = "";
+            }
+        }
+
+        private void comboBoxPessoa_DropDownClosed(object sender, EventArgs e)
+        {
+            maskedTextBoxCpfCnpj.Enabled = true;
+            if (comboBoxPessoa.SelectedIndex == 0)
+            {
+                maskedTextBoxCpfCnpj.Mask = @"000\.000\.000\-00";
+                maskedTextBoxCpfCnpj.Text = "";
+            }
+            else
+            {
+                maskedTextBoxCpfCnpj.Mask = @"00\.000\.000\\0000\-00";
+                maskedTextBoxCpfCnpj.Text = "";
+            }
+            maskedTextBoxCpfCnpj.Focus();
         }
     }
 }
